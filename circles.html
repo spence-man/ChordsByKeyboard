@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Circles</title>
+	<script type="text/javascript" src="paper-full.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.1/howler.js"></script>
+	<link rel="stylesheet" href="circles.css">
+	<script type="text/paperscript" canvas="myCanvas">
+
+		var keyData = {
+			q: {
+				sound: new Howl({
+					src: ['sounds/A7.wav']
+				}),
+				color: '#1abc9c',
+				text: 'A7'
+			},
+			w: {
+				sound: new Howl({
+					src: ['sounds/Am.wav']
+				}),
+				color: '#2ecc71',
+				text: 'Am'
+			},
+			e: {
+				sound: new Howl({
+					src: ['sounds/Amaj7.wav']
+				}),
+				color: '#3498db',
+				text: 'Amaj7'
+			},
+			r: {
+				sound: new Howl({
+					src: ['sounds/B.wav']
+				}),
+				color: '#9b59b6',
+				text: 'B'
+			},
+			t: {
+				sound: new Howl({
+					src: ['sounds/Bmaj7.wav']
+				}),
+				color: '#34495e',
+				text: 'Bmaj7'
+			},
+			y: {
+				sound: new Howl({
+					src: ['sounds/C.wav']
+				}),
+				color: '#16a085',
+				text: 'C'
+			},
+			u: {
+				sound: new Howl({
+					src: ['sounds/C7.wav']
+				}),
+				color: '#27ae60',
+				text: 'C7'
+			},
+			i: {
+				sound: new Howl({
+					src: ['sounds/Cm.wav']
+				}),
+				color: '#2980b9',
+				text: 'Cm'
+			},
+			o: {
+				sound: new Howl({
+					src: ['sounds/Cmaj7.wav']
+				}),
+				color: '#8e44ad',
+				text: 'Cmaj7'
+			},
+				p: {
+				sound: new Howl({
+					src: ['sounds/D.wav']
+				}),
+				color: '#2c3e50',
+				text: 'D'
+			},
+			a: {
+				sound: new Howl({
+					src: ['sounds/D7.wav']
+				}),
+				color: '#f1c40f',
+				text: 'D7'
+			},
+			s: {
+				sound: new Howl({
+					src: ['sounds/Dbmaj7.wav']
+				}),
+				color: '#e67e22',
+				text: 'Dbmaj7'
+			},
+			d: {
+				sound: new Howl({
+					src: ['sounds/Dm.wav']
+				}),
+				color: '#e74c3c',
+				text: 'Dm'
+			},
+			f: {
+				sound: new Howl({
+					src: ['sounds/Dmaj7.wav']
+				}),
+				color: '#95a5a6',
+				text: 'Dmaj7'
+			},
+			g: {
+				sound: new Howl({
+					src: ['sounds/E.wav']
+				}),
+				color: '#f39c12',
+				text: 'E'
+			},
+			h: {
+				sound: new Howl({
+					src: ['sounds/E7.wav']
+				}),
+				color: '#d35400',
+				text: 'E7'
+			},
+			j: {
+				sound: new Howl({
+					src: ['sounds/Gmaj7.wav']
+				}),
+				color: '#1abc9c',
+				text: 'Gmaj7'
+			},
+			k: {
+				sound: new Howl({
+					src: ['sounds/Em.wav']
+				}),
+				color: '#2ecc71',
+				text: 'Em'
+			},
+			l: {
+				sound: new Howl({
+					src: ['sounds/Emaj7.wav']
+				}),
+				color: '#3498db',
+				text: 'Emaj7'
+			},
+			z: {
+				sound: new Howl({
+					src: ['sounds/F.wav']
+				}),
+				color: '#9b59b6',
+				text: 'F'
+			},
+			x: {
+				sound: new Howl({
+					src: ['sounds/F7.wav']
+				}),
+				color: '#34495e',
+				text: 'F7'
+			},
+			c: {
+				sound: new Howl({
+					src: ['sounds/Fmaj7.wav']
+				}),
+				color: '#16a085',
+				text: 'Fmaj7'
+			},
+			v: {
+				sound: new Howl({
+					src: ['sounds/F7.wav']
+				}),
+				color: '#27ae60',
+				text: 'F7'
+			},
+			b: {
+				sound: new Howl({
+					src: ['sounds/Fmaj7.wav']
+				}),
+				color: '#2980b9',
+				text: 'Fmaj7'
+			},
+			n: {
+				sound: new Howl({
+					src: ['sounds/G.wav']
+				}),
+				color: '#8e44ad',
+				text: 'G'
+			},
+			m: {
+				sound: new Howl({
+					src: ['sounds/Gm.wav']
+				}),
+				color: '#2c3e50',
+				text: 'Gm'
+			},
+			1: {
+				sound: new Howl({
+					src: ['sounds/Gm.wav']
+				}),
+				color: '#2c3e50',
+				text: 'Gm'
+			}
+		}
+
+		
+		var circles = [];
+		var texts = [];
+
+		function onKeyDown(event) {
+
+			if (keyData[event.key]) {
+				var maxPoint = new Point(view.size.width, view.size.height);
+				var randomPoint = Point.random();
+				var point = maxPoint * randomPoint;
+
+				var newCircle = new Path.Circle(point, 500);
+				newCircle.fillColor = keyData[event.key].color;
+				keyData[event.key].sound.play();
+				circles.push(newCircle);
+
+				var text = new PointText(point);
+				text.content = keyData[event.key].text;
+				text.style = {
+					fontFamily: 'Courier New',
+					fontWeight: 'bold',
+					fontSize: 40,
+					fillColor: '#F87F81',
+					justification: 'center'
+				};
+				texts.push(text);
+			} 
+		}
+
+		// --- SCATTERED CIRCLES --- //
+		var count = 150;
+		var path = new Path.Circle({
+			center: [0, 0],
+			radius: 10,
+			fillColor: 'white',
+			strokeColor: 'black'
+		});
+		var symbol = new Symbol(path);
+
+		for (var i = 0; i < count; i++) {
+			var center = Point.random() * view.size;
+			var placedSymbol = symbol.place(center);
+			placedSymbol.scale(i / count);
+		}
+
+		// --- WAVY LINE --- //
+		var amount = 5;
+		var height = 100;
+		var path = new Path({
+			strokeColor: [0.8],
+			strokeWidth: 10,
+			strokeCap: 'square'
+		});
+
+		for (var i = 0; i <= amount; i++) {
+			path.add(new Point(i / amount, 1) * view.size);
+		}
+
+		// --- ANIMATION LOOPS --- //
+		function onFrame(event){
+			// -- randomized circles --//
+			for (var i = 0; i < circles.length; i++){
+				circles[i].scale(0.9);
+				circles[i].fillColor.hue += 1;
+				if(circles[i].area < 1){
+					circles[i].remove();
+					circles.splice(i,1);
+					texts[i].remove();
+					texts.splice(i,1);
+				}
+			} 
+		
+			// -- wavy line --//
+			for (var i = 0; i <= amount; i++) {
+				var segment = path.segments[i];
+				var sinus = Math.sin(event.time * 3 + i);
+				segment.point.y = sinus * height + 800;
+			}
+			path.smooth();
+			
+			// -- circles in motion --//
+			for (var i = 0; i < count; i++) {
+				var item = project.activeLayer.children[i];
+				item.position.x += item.bounds.width / 20;
+				if (item.bounds.left > view.size.width) {
+					item.position.x = -item.bounds.width;
+				}
+			}
+		}
+		
+</script>
+
+
+</head>
+<body>
+	<div id="container">
+		<p id="title" >PRESS ANY LETTER KEY</p>
+		<h1 id="header">Chords by Keyboard</h1>
+
+		<button id="myBtn">HELP</button>
+		<div id="myModal" class="modal">
+			<div class="modal-content">
+				<span class="close">&times;</span>
+				<h2>Type the following letters to make a song.</h2>
+				<h3> My Girl - The Temptations</h3>
+				<p>press:</p>
+				<p>ny ny ny ny</p>
+				<p>nw yp nw yp</p> 
+				<p>ny a</p>
+				<br>
+				<h3>general (I-IV-V)</h3>
+				<p>press: y n w z </p>
+				<br>
+				<h3> pop (I-V-vi-IV)</h3>
+				<p>press: y z n y </p>
+				<br>
+				<h3>jazz (ii-V-I)</h3>
+				<p>press: o w d j </p>
+				<br>
+				<table>
+					<tr>
+    				<th>LETTER</th>
+    				<th>CHORD</th>
+    				<th>LETTER</th>
+    				<th>CHORD</th>
+  				</tr>
+					<tr>
+						<td>q</td>
+						<td>A7</td>
+						<td>f</td>
+						<td>Dmaj7</td>
+					</tr>
+					<tr>
+						<td>w</td>
+						<td>Am</td>
+						<td>g</td>
+						<td>E</td>
+					</tr>
+					<tr>
+						<td>e</td>
+						<td>Amaj7</td>
+						<td>h</td>
+						<td>E7</td>
+					</tr>
+					<tr>
+						<td>r</td>
+						<td>B</td>
+						<td>j</td>
+						<td>Gmaj7</td>
+					</tr>
+					<tr>
+						<td>t</td>
+						<td>Bmaj7</td>
+						<td>k</td>
+						<td>Em</td>
+					</tr>
+					<tr>
+						<td>y</td>
+						<td>C</td>
+						<td>l</td>
+						<td>Emaj7</td>
+					</tr>
+					<tr>
+						<td>u</td>
+						<td>C7</td>
+						<td>z</td>
+						<td>F</td>
+					</tr>
+					<tr>
+						<td>i</td>
+						<td>Cm</td>
+						<td>x</td>
+						<td>F7</td>
+					</tr>
+					<tr>
+						<td>o</td>
+						<td>Cmaj7</td>
+						<td>c</td>
+						<td>Fmaj7</td>
+					</tr>
+					<tr>
+						<td>p</td>
+						<td>D</td>
+						<td>v</td>
+						<td>F7</td>
+					</tr>
+					<tr>
+						<td>a</td>
+						<td>D7</td>
+						<td>b</td>
+						<td>Fmaj7</td>
+					</tr>
+					<tr>
+						<td>s</td>
+						<td>Dbmaj7</td>
+						<td>n</td>
+						<td>G</td>
+					</tr>
+					<tr>
+						<td>d</td>
+						<td>Dm</td>
+						<td>m</td>
+						<td>Gm</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+
+		
+<canvas id="myCanvas" resize></canvas>
+<script>
+	// Get the modal
+	var modal = document.getElementById('myModal');
+
+	// Get the button that opens the modal
+	var btn = document.getElementById("myBtn");
+
+	// Get the <span> element that closes the modal
+	var span = document.getElementsByClassName("close")[0];
+
+	// When the user clicks on the button, open the modal 
+	btn.onclick = function() {
+		modal.style.display = "block";
+	};
+
+	// When the user clicks on <span> (x), close the modal
+	span.onclick = function() {
+		modal.style.display = "none";
+	};
+
+	// When the user clicks anywhere outside of the modal, close it
+	window.onclick = function(event) {
+		if (event.target == modal) {
+		modal.style.display = "none";
+		}
+	};
+</script>
+</body>
+</html>
