@@ -1,6 +1,1 @@
-{
-    "require": {
-        "hower.js/howler.js": "2.0.1*",
-        "paper-full.js/paper-full.js": "0.10.2"
-    }
-}
+{}
